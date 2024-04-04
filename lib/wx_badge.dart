@@ -1,7 +1,9 @@
 library wx_badge;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/style.dart';
+export 'src/layout.dart';
+export 'src/transition.dart';
+export 'src/theme_data.dart';
+export 'src/theme_preset.dart';
+export 'src/theme.dart';
+export 'src/widget.dart';
