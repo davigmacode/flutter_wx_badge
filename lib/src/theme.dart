@@ -22,7 +22,8 @@ class WxBadgeTheme extends InheritedTheme {
   /// The [child] arguments must not be null.
   static Widget merge({
     Key? key,
-    Curve? curve,
+    Curve? curveIn,
+    Curve? curveOut,
     Duration? duration,
     AlignmentGeometry? alignment,
     Offset? offset,
@@ -36,7 +37,8 @@ class WxBadgeTheme extends InheritedTheme {
         return WxBadgeTheme(
           key: key,
           data: parent.merge(data).copyWith(
-                curve: curve,
+                curveIn: curveIn,
+                curveOut: curveOut,
                 duration: duration,
                 position: alignment,
                 offset: offset,

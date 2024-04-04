@@ -12,7 +12,8 @@ class WxBadge extends StatelessWidget {
   const WxBadge({
     super.key,
     this.duration,
-    this.curve,
+    this.curveIn,
+    this.curveOut,
     this.transition = WxBadgeTransition.scale,
     this.layout = WxBadgeLayout.defaults,
     this.hidden = false,
@@ -23,8 +24,11 @@ class WxBadge extends StatelessWidget {
     required this.child,
   });
 
-  /// The curve to apply when animating the parameters of this widget.
-  final Curve? curve;
+  /// The animation curve to use when transitioning in a new [content].
+  final Curve? curveIn;
+
+  /// The animation curve to use when transitioning a previous [content] out.
+  final Curve? curveOut;
 
   /// The duration over which to animate the parameters of this widget.
   final Duration? duration;
@@ -64,7 +68,8 @@ class WxBadge extends StatelessWidget {
     final badgeStyle = badgeTheme.style.merge(style);
     final effectivePosition = position ?? badgeTheme.position;
     final effectiveOffset = offset ?? badgeTheme.offset;
-    final effectiveCurve = curve ?? badgeTheme.curve;
+    final effectiveCurveIn = curveIn ?? badgeTheme.curveIn;
+    final effectiveCurveOut = curveOut ?? badgeTheme.curveOut;
     final effectiveDuration = duration ?? badgeTheme.duration;
 
     Widget badge = SizedBox.shrink(
@@ -112,8 +117,8 @@ class WxBadge extends StatelessWidget {
     // build animation
     badge = AnimatedSwitcher(
       duration: effectiveDuration,
-      switchInCurve: effectiveCurve,
-      switchOutCurve: effectiveCurve,
+      switchInCurve: effectiveCurveIn,
+      switchOutCurve: effectiveCurveOut,
       transitionBuilder: transition,
       layoutBuilder: layout,
       child: badge,
@@ -140,7 +145,8 @@ class WxBadge extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Curve?>('curve', curve));
+    properties.add(DiagnosticsProperty<Curve?>('curveIn', curveIn));
+    properties.add(DiagnosticsProperty<Curve?>('curveOut', curveOut));
     properties.add(DiagnosticsProperty<Duration?>('duration', duration));
     properties.add(DiagnosticsProperty<bool>('hidden', hidden));
     properties

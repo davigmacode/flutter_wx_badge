@@ -4,16 +4,19 @@ import 'package:wx_utils/wx_utils.dart';
 import 'style.dart';
 import 'theme_preset.dart';
 
-/// Defines the visual properties of [Badge].
+/// Defines the visual properties of [WxBadge].
 ///
 /// Descendant widgets obtain the current [WxBadgeThemeData] object using
-/// `BadgeTheme.of(context)`. Instances of [WxBadgeThemeData]
+/// `WxBadgeTheme.of(context)`. Instances of [WxBadgeThemeData]
 /// can be customized with [WxBadgeThemeData.copyWith] or [WxBadgeThemeData.merge].
 @immutable
 class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     with Diagnosticable {
-  /// The curve to apply when animating the parameters of badge widget.
-  final Curve curve;
+  /// The animation curve to use when transitioning in a new badge content.
+  final Curve curveIn;
+
+  /// The animation curve to use when transitioning a previous badge content out.
+  final Curve curveOut;
 
   /// The duration over which to animate the parameters of badge widget.
   final Duration duration;
@@ -29,7 +32,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// Creates a theme data that can be used for [BadgeTheme].
   const WxBadgeThemeData({
-    required this.curve,
+    required this.curveIn,
+    required this.curveOut,
     required this.duration,
     required this.position,
     required this.offset,
@@ -38,7 +42,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// An [WxBadgeThemeData] with some reasonable default values.
   static const fallback = WxBadgeThemeData(
-    curve: Curves.linear,
+    curveIn: Curves.linear,
+    curveOut: Curves.linear,
     duration: Duration(milliseconds: 200),
     position: Alignment.topRight,
     offset: Offset.zero,
@@ -47,7 +52,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// Creates a [WxBadgeThemeData] from another one that probably null.
   WxBadgeThemeData.from([WxBadgeThemeData? other])
-      : curve = other?.curve ?? fallback.curve,
+      : curveIn = other?.curveIn ?? fallback.curveIn,
+        curveOut = other?.curveOut ?? fallback.curveOut,
         duration = other?.duration ?? fallback.duration,
         position = other?.position ?? fallback.position,
         offset = other?.offset ?? fallback.offset,
@@ -61,14 +67,16 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   /// the given fields replaced with the new values.
   @override
   WxBadgeThemeData copyWith({
-    Curve? curve,
+    Curve? curveIn,
+    Curve? curveOut,
     Duration? duration,
     AlignmentGeometry? position,
     Offset? offset,
     WxBadgeStyle? style,
   }) {
     return WxBadgeThemeData(
-      curve: curve ?? this.curve,
+      curveIn: curveIn ?? this.curveIn,
+      curveOut: curveOut ?? this.curveOut,
       duration: duration ?? this.duration,
       position: position ?? this.position,
       offset: offset ?? this.offset,
@@ -83,7 +91,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     if (other == null) return this;
 
     return copyWith(
-      curve: other.curve,
+      curveIn: other.curveIn,
+      curveOut: other.curveOut,
       duration: other.duration,
       position: other.position,
       offset: other.offset,
@@ -95,7 +104,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   WxBadgeThemeData lerp(ThemeExtension<WxBadgeThemeData>? other, double t) {
     if (other is! WxBadgeThemeData) return this;
     return WxBadgeThemeData(
-      curve: lerpEnum(curve, other.curve, t) ?? curve,
+      curveIn: lerpEnum(curveIn, other.curveIn, t) ?? curveIn,
+      curveOut: lerpEnum(curveOut, other.curveOut, t) ?? curveOut,
       duration: lerpEnum(duration, other.duration, t) ?? duration,
       position: AlignmentGeometry.lerp(position, other.position, t) ?? position,
       offset: Offset.lerp(offset, other.offset, t) ?? offset,
@@ -104,7 +114,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   }
 
   Map<String, dynamic> toMap() => {
-        'curve': curve,
+        'curveIn': curveIn,
+        'curveOut': curveOut,
         'duration': duration,
         'position': position,
         'offset': offset,
