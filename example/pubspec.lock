@@ -246,12 +246,20 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.0"
   wx_box:
     dependency: transitive
     description:
       name: wx_box
-      sha256: "4a54b28a6fa2767106db210a2a15beec23677d72d80d263bc764cc513ec984fc"
+      sha256: "2e0d996add2d83c5fd31ba842012faf119baca50e829c0aa1ce8d908c3e307b8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
+  wx_text:
+    dependency: "direct main"
+    description:
+      name: wx_text
+      sha256: "813f7ee60a3f13fd07ddbcb6f6280a6e8b661642bb534f7757ca319f6b920f98"
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"

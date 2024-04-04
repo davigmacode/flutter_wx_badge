@@ -34,6 +34,7 @@ dependencies:
     path: ../
   wx_avatar: ^1.1.0
   wx_anchor: ^1.0.1
+  wx_text: ^2.0.1
 
 dev_dependencies:
   flutter_test:
