@@ -91,6 +91,8 @@ class WxBadge extends StatelessWidget {
       // create shape with its decoration
       badge = WxBox(
         key: ValueKey(content),
+        width: badgeStyle.width,
+        height: badgeStyle.height,
         constraints: badgeStyle.constraints,
         clipBehavior: badgeStyle.clipBehavior,
         shadowColor: badgeStyle.shadowColor,

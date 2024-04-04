@@ -8,9 +8,12 @@ import 'types.dart';
 class WxBadgeStyle with Diagnosticable {
   /// Create a raw badge's style
   const WxBadgeStyle({
-    this.size,
-    this.minSize,
-    this.maxSize,
+    this.width,
+    this.height,
+    this.minWidth,
+    this.maxWidth,
+    this.minHeight,
+    this.maxHeight,
     this.shape,
     this.clipBehavior,
     this.shadowColor,
@@ -32,9 +35,40 @@ class WxBadgeStyle with Diagnosticable {
     this.borderRadius,
   });
 
+  /// Create an badge's style with square shape
+  const WxBadgeStyle.square({
+    double? size,
+    double? minSize,
+    double? maxSize,
+    this.clipBehavior,
+    this.shadowColor,
+    this.elevation,
+    this.foregroundStyle,
+    this.foregroundSize,
+    this.foregroundColor,
+    this.foregroundOpacity,
+    this.foregroundAlpha,
+    this.backgroundColor,
+    this.backgroundOpacity,
+    this.backgroundAlpha,
+    this.borderColor,
+    this.borderOpacity,
+    this.borderAlpha,
+    this.borderWidth,
+    this.borderAlign,
+    this.borderStyle,
+    this.borderRadius,
+  })  : shape = WxBadgeShape.rectangle,
+        width = size,
+        height = size,
+        minWidth = minSize,
+        maxWidth = maxSize,
+        minHeight = minSize,
+        maxHeight = maxSize;
+
   /// Create an badge's style with circle shape
   const WxBadgeStyle.circle({
-    double? radius,
+    double? radius = 10,
     double? minRadius,
     double? maxRadius,
     this.clipBehavior,
@@ -54,17 +88,23 @@ class WxBadgeStyle with Diagnosticable {
     this.borderWidth,
     this.borderAlign,
     this.borderStyle,
-    this.borderRadius,
   })  : shape = WxBadgeShape.circle,
-        size = radius != null ? radius * 2 : null,
-        minSize = minRadius != null ? minRadius * 2 : null,
-        maxSize = maxRadius != null ? maxRadius * 2 : null;
+        borderRadius = null,
+        width = radius != null ? radius * 2 : null,
+        height = radius != null ? radius * 2 : null,
+        minWidth = minRadius != null ? minRadius * 2 : null,
+        maxWidth = maxRadius != null ? maxRadius * 2 : null,
+        minHeight = minRadius != null ? minRadius * 2 : null,
+        maxHeight = maxRadius != null ? maxRadius * 2 : null;
 
   /// Create a raw badge's style with stadium shape
   const WxBadgeStyle.stadium({
-    this.size,
-    this.minSize,
-    this.maxSize,
+    this.width,
+    this.height,
+    this.minWidth,
+    this.maxWidth,
+    this.minHeight,
+    this.maxHeight,
     this.clipBehavior,
     this.shadowColor,
     this.elevation,
@@ -82,14 +122,17 @@ class WxBadgeStyle with Diagnosticable {
     this.borderWidth,
     this.borderAlign,
     this.borderStyle,
-    this.borderRadius,
-  }) : shape = WxBadgeShape.stadium;
+  })  : shape = WxBadgeShape.stadium,
+        borderRadius = null;
 
   /// Create a badge's style from another style
   WxBadgeStyle.from(WxBadgeStyle? other)
-      : size = other?.size,
-        minSize = other?.minSize,
-        maxSize = other?.maxSize,
+      : width = other?.width,
+        height = other?.height,
+        minWidth = other?.minWidth,
+        maxWidth = other?.maxWidth,
+        minHeight = other?.minHeight,
+        maxHeight = other?.maxHeight,
         shape = other?.shape,
         clipBehavior = other?.clipBehavior,
         shadowColor = other?.shadowColor,
@@ -112,7 +155,6 @@ class WxBadgeStyle with Diagnosticable {
 
   /// An [WxBadgeStyle] with some reasonable default values.
   static const defaults = WxBadgeStyle(
-    size: 20.0,
     shape: WxBadgeShape.rectangle,
     borderRadius: BorderRadius.all(Radius.circular(4)),
     borderWidth: 2.0,
@@ -124,14 +166,23 @@ class WxBadgeStyle with Diagnosticable {
   /// The type of badge's shape.
   final WxBadgeShape? shape;
 
-  /// The size of the badge
-  final double? size;
+  /// The horizontal extent of the badge widget.
+  final double? width;
 
-  /// The minimum size of the badge
-  final double? minSize;
+  /// The vertical extent of the badge widget.
+  final double? height;
 
-  /// The maximum size of the badge
-  final double? maxSize;
+  /// The minimum width of the badge
+  final double? minWidth;
+
+  /// The maximum width of the badge
+  final double? maxWidth;
+
+  /// The minimum height of the badge
+  final double? minHeight;
+
+  /// The maximum height of the badge
+  final double? maxHeight;
 
   /// The badge's content will be clipped (or not) according to this option.
   ///
@@ -203,29 +254,11 @@ class WxBadgeStyle with Diagnosticable {
 
   /// constraints to apply to the badge
   BoxConstraints get constraints => BoxConstraints(
-        minHeight: effectiveMinSize,
-        minWidth: effectiveMinSize,
-        maxWidth: effectiveMaxSize,
-        maxHeight: effectiveMaxSize,
+        minHeight: minHeight ?? 0,
+        minWidth: minWidth ?? 0,
+        maxWidth: maxWidth ?? double.infinity,
+        maxHeight: maxHeight ?? double.infinity,
       );
-
-  /// Calculated badge min size
-  double get effectiveMinSize {
-    if (size == null && minSize == null && maxSize == null) {
-      return defaults.size!;
-    }
-    const defaultMinSize = 0.0;
-    return size ?? minSize ?? defaultMinSize;
-  }
-
-  /// Calculated badge max size
-  double get effectiveMaxSize {
-    if (size == null && minSize == null && maxSize == null) {
-      return defaults.size!;
-    }
-    const defaultMaxSize = double.infinity;
-    return size ?? maxSize ?? defaultMaxSize;
-  }
 
   /// If [shape] is `null`, then fallback to default value
   WxBadgeShape get effectiveShape => shape ?? defaults.shape!;
@@ -274,9 +307,12 @@ class WxBadgeStyle with Diagnosticable {
   /// Creates a copy of this [WxBadgeStyle] but with
   /// the given fields replaced with the new values.
   WxBadgeStyle copyWith({
-    double? size,
-    double? minSize,
-    double? maxSize,
+    double? width,
+    double? height,
+    double? minWidth,
+    double? maxWidth,
+    double? minHeight,
+    double? maxHeight,
     WxBadgeShape? shape,
     Clip? clipBehavior,
     Color? shadowColor,
@@ -299,9 +335,12 @@ class WxBadgeStyle with Diagnosticable {
     BorderRadius? borderRadius,
   }) {
     return WxBadgeStyle(
-      size: size ?? this.size,
-      minSize: minSize ?? this.minSize,
-      maxSize: maxSize ?? this.maxSize,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      minWidth: minWidth ?? this.minWidth,
+      maxWidth: maxWidth ?? this.maxWidth,
+      minHeight: minHeight ?? this.minHeight,
+      maxHeight: maxHeight ?? this.maxHeight,
       shape: shape ?? this.shape,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       shadowColor: shadowColor ?? this.shadowColor,
@@ -331,9 +370,12 @@ class WxBadgeStyle with Diagnosticable {
     if (other == null) return this;
 
     return copyWith(
-      size: other.size,
-      minSize: other.minSize,
-      maxSize: other.maxSize,
+      width: other.width,
+      height: other.height,
+      minWidth: other.minWidth,
+      maxWidth: other.maxWidth,
+      minHeight: other.minHeight,
+      maxHeight: other.maxHeight,
       shape: other.shape,
       clipBehavior: other.clipBehavior,
       shadowColor: other.shadowColor,
@@ -360,9 +402,12 @@ class WxBadgeStyle with Diagnosticable {
   static WxBadgeStyle? lerp(WxBadgeStyle? a, WxBadgeStyle? b, double t) {
     if (a == null && b == null) return null;
     return WxBadgeStyle(
-      size: lerpDouble(a?.size, b?.size, t),
-      minSize: lerpDouble(a?.minSize, b?.minSize, t),
-      maxSize: lerpDouble(a?.maxSize, b?.maxSize, t),
+      width: lerpDouble(a?.width, b?.width, t),
+      height: lerpDouble(a?.height, b?.height, t),
+      minWidth: lerpDouble(a?.minWidth, b?.minWidth, t),
+      maxWidth: lerpDouble(a?.maxWidth, b?.maxWidth, t),
+      minHeight: lerpDouble(a?.minHeight, b?.minHeight, t),
+      maxHeight: lerpDouble(a?.maxHeight, b?.maxHeight, t),
       shape: t < 0.5 ? a?.shape : b?.shape,
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
       shadowColor: Color.lerp(a?.shadowColor, b?.shadowColor, t),
@@ -389,9 +434,12 @@ class WxBadgeStyle with Diagnosticable {
   }
 
   Map<String, dynamic> toMap() => {
-        'size': size,
-        'minSize': minSize,
-        'maxSize': maxSize,
+        'width': width,
+        'height': height,
+        'minWidth': minWidth,
+        'maxWidth': maxWidth,
+        'minHeight': minHeight,
+        'maxHeight': maxHeight,
         'shape': shape,
         'clipBehavior': clipBehavior,
         'shadowColor': shadowColor,
