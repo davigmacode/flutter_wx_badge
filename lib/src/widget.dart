@@ -16,7 +16,7 @@ class WxBadge extends StatelessWidget {
     this.transition = WxBadgeTransition.scale,
     this.layout = WxBadgeLayout.defaults,
     this.hidden = false,
-    this.alignment,
+    this.position,
     this.offset,
     this.style,
     this.content,
@@ -41,7 +41,7 @@ class WxBadge extends StatelessWidget {
   final bool hidden;
 
   /// How to align the badge with the [child].
-  final AlignmentGeometry? alignment;
+  final AlignmentGeometry? position;
 
   /// Translate the badge with this offset.
   final Offset? offset;
@@ -50,7 +50,7 @@ class WxBadge extends StatelessWidget {
   final WxBadgeStyle? style;
 
   ///  The primary content of the badge.
-  final String? content;
+  final Widget? content;
 
   /// The widget below this widget in the tree.
   final Widget child;
@@ -62,7 +62,7 @@ class WxBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final badgeTheme = WxBadgeTheme.of(context);
     final badgeStyle = badgeTheme.style.merge(style);
-    final effectiveAlignment = alignment ?? badgeTheme.alignment;
+    final effectivePosition = position ?? badgeTheme.position;
     final effectiveOffset = offset ?? badgeTheme.offset;
     final effectiveCurve = curve ?? badgeTheme.curve;
     final effectiveDuration = duration ?? badgeTheme.duration;
@@ -72,13 +72,26 @@ class WxBadge extends StatelessWidget {
     );
 
     if (visible) {
+      Widget? effectiveContent;
+      if (content != null) {
+        effectiveContent = MediaQuery.withNoTextScaling(
+          child: DefaultTextStyle(
+            style: badgeStyle.effectiveForegroundStyle,
+            child: IconTheme.merge(
+              data: IconThemeData(
+                color: badgeStyle.effectiveForegroundColor,
+                size: badgeStyle.foregroundSize,
+              ),
+              child: content!,
+            ),
+          ),
+        );
+      }
+
       // create shape with its decoration
-      badge = WxAnimatedBox(
+      badge = WxBox(
         key: ValueKey(content),
-        curve: effectiveCurve,
-        duration: effectiveDuration,
         constraints: badgeStyle.constraints,
-        margin: badgeStyle.margin,
         clipBehavior: badgeStyle.clipBehavior,
         shadowColor: badgeStyle.shadowColor,
         elevation: badgeStyle.elevation,
@@ -88,8 +101,9 @@ class WxBadge extends StatelessWidget {
         borderStyle: badgeStyle.borderStyle,
         borderRadius: badgeStyle.borderRadius,
         borderAlign: badgeStyle.borderAlign,
-        shape: badgeStyle.wxBoxShape,
-        child: content != null ? Text(content!) : null,
+        shape: badgeStyle.effectiveShape,
+        alignment: Alignment.center,
+        child: effectiveContent,
       );
     }
 
@@ -112,7 +126,7 @@ class WxBadge extends StatelessWidget {
     );
 
     return Stack(
-      alignment: effectiveAlignment,
+      alignment: effectivePosition,
       clipBehavior: Clip.none,
       children: <Widget>[
         child,
@@ -128,9 +142,8 @@ class WxBadge extends StatelessWidget {
     properties.add(DiagnosticsProperty<Duration?>('duration', duration));
     properties.add(DiagnosticsProperty<bool>('hidden', hidden));
     properties
-        .add(DiagnosticsProperty<AlignmentGeometry?>('alignment', alignment));
+        .add(DiagnosticsProperty<AlignmentGeometry?>('alignment', position));
     properties.add(DiagnosticsProperty<Offset?>('offset', offset));
     properties.add(DiagnosticsProperty<WxBadgeStyle?>('style', style));
-    properties.add(StringProperty('content', content));
   }
 }

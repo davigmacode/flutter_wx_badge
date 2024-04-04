@@ -19,7 +19,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   final Duration duration;
 
   /// Align the badge content within the child.
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry position;
 
   /// Offset of the badge content
   final Offset offset;
@@ -31,7 +31,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   const WxBadgeThemeData({
     required this.curve,
     required this.duration,
-    required this.alignment,
+    required this.position,
     required this.offset,
     required this.style,
   });
@@ -40,7 +40,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   static const fallback = WxBadgeThemeData(
     curve: Curves.linear,
     duration: Duration(milliseconds: 200),
-    alignment: Alignment.topRight,
+    position: Alignment.topRight,
     offset: Offset.zero,
     style: WxBadgeStyle.defaults,
   );
@@ -49,7 +49,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   WxBadgeThemeData.from([WxBadgeThemeData? other])
       : curve = other?.curve ?? fallback.curve,
         duration = other?.duration ?? fallback.duration,
-        alignment = other?.alignment ?? fallback.alignment,
+        position = other?.position ?? fallback.position,
         offset = other?.offset ?? fallback.offset,
         style = other?.style ?? fallback.style;
 
@@ -63,14 +63,14 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   WxBadgeThemeData copyWith({
     Curve? curve,
     Duration? duration,
-    AlignmentGeometry? alignment,
+    AlignmentGeometry? position,
     Offset? offset,
     WxBadgeStyle? style,
   }) {
     return WxBadgeThemeData(
       curve: curve ?? this.curve,
       duration: duration ?? this.duration,
-      alignment: alignment ?? this.alignment,
+      position: position ?? this.position,
       offset: offset ?? this.offset,
       style: this.style.merge(style),
     );
@@ -85,7 +85,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     return copyWith(
       curve: other.curve,
       duration: other.duration,
-      alignment: other.alignment,
+      position: other.position,
       offset: other.offset,
       style: other.style,
     );
@@ -97,8 +97,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     return WxBadgeThemeData(
       curve: lerpEnum(curve, other.curve, t) ?? curve,
       duration: lerpEnum(duration, other.duration, t) ?? duration,
-      alignment:
-          AlignmentGeometry.lerp(alignment, other.alignment, t) ?? alignment,
+      position: AlignmentGeometry.lerp(position, other.position, t) ?? position,
       offset: Offset.lerp(offset, other.offset, t) ?? offset,
       style: WxBadgeStyle.lerp(style, other.style, t) ?? style,
     );
@@ -107,7 +106,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   Map<String, dynamic> toMap() => {
         'curve': curve,
         'duration': duration,
-        'alignment': alignment,
+        'position': position,
         'offset': offset,
         'style': style,
       };
