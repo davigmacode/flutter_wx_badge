@@ -15,6 +15,7 @@ class WxBadgeStyle with Diagnosticable {
     this.minHeight,
     this.maxHeight,
     this.shape,
+    this.padding,
     this.clipBehavior,
     this.shadowColor,
     this.elevation,
@@ -40,6 +41,7 @@ class WxBadgeStyle with Diagnosticable {
     double? size,
     double? minSize,
     double? maxSize,
+    this.padding,
     this.clipBehavior,
     this.shadowColor,
     this.elevation,
@@ -68,9 +70,10 @@ class WxBadgeStyle with Diagnosticable {
 
   /// Create an badge's style with circle shape
   const WxBadgeStyle.circle({
-    double? radius = 10,
+    double? radius,
     double? minRadius,
     double? maxRadius,
+    this.padding,
     this.clipBehavior,
     this.shadowColor,
     this.elevation,
@@ -105,6 +108,7 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
+    this.padding,
     this.clipBehavior,
     this.shadowColor,
     this.elevation,
@@ -134,6 +138,7 @@ class WxBadgeStyle with Diagnosticable {
         minHeight = other?.minHeight,
         maxHeight = other?.maxHeight,
         shape = other?.shape,
+        padding = other?.padding,
         clipBehavior = other?.clipBehavior,
         shadowColor = other?.shadowColor,
         elevation = other?.elevation,
@@ -165,6 +170,9 @@ class WxBadgeStyle with Diagnosticable {
 
   /// The type of badge's shape.
   final WxBadgeShape? shape;
+
+  /// The amount of space by which to inset the badge content.
+  final EdgeInsetsGeometry? padding;
 
   /// The horizontal extent of the badge widget.
   final double? width;
@@ -253,12 +261,17 @@ class WxBadgeStyle with Diagnosticable {
   final BorderRadius? borderRadius;
 
   /// constraints to apply to the badge
-  BoxConstraints get constraints => BoxConstraints(
-        minHeight: minHeight ?? 0,
-        minWidth: minWidth ?? 0,
-        maxWidth: maxWidth ?? double.infinity,
-        maxHeight: maxHeight ?? double.infinity,
-      );
+  BoxConstraints? get constraints => minWidth != null ||
+          minHeight != null ||
+          maxWidth != null ||
+          maxHeight != null
+      ? BoxConstraints(
+          minHeight: minHeight ?? 0,
+          minWidth: minWidth ?? 0,
+          maxWidth: maxWidth ?? double.infinity,
+          maxHeight: maxHeight ?? double.infinity,
+        )
+      : null;
 
   /// If [shape] is `null`, then fallback to default value
   WxBadgeShape get effectiveShape => shape ?? defaults.shape!;
@@ -314,6 +327,7 @@ class WxBadgeStyle with Diagnosticable {
     double? minHeight,
     double? maxHeight,
     WxBadgeShape? shape,
+    EdgeInsetsGeometry? padding,
     Clip? clipBehavior,
     Color? shadowColor,
     double? elevation,
@@ -342,6 +356,7 @@ class WxBadgeStyle with Diagnosticable {
       minHeight: minHeight ?? this.minHeight,
       maxHeight: maxHeight ?? this.maxHeight,
       shape: shape ?? this.shape,
+      padding: padding ?? this.padding,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       shadowColor: shadowColor ?? this.shadowColor,
       elevation: elevation ?? this.elevation,
@@ -377,6 +392,7 @@ class WxBadgeStyle with Diagnosticable {
       minHeight: other.minHeight,
       maxHeight: other.maxHeight,
       shape: other.shape,
+      padding: other.padding,
       clipBehavior: other.clipBehavior,
       shadowColor: other.shadowColor,
       elevation: other.elevation,
@@ -409,6 +425,7 @@ class WxBadgeStyle with Diagnosticable {
       minHeight: lerpDouble(a?.minHeight, b?.minHeight, t),
       maxHeight: lerpDouble(a?.maxHeight, b?.maxHeight, t),
       shape: t < 0.5 ? a?.shape : b?.shape,
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
       shadowColor: Color.lerp(a?.shadowColor, b?.shadowColor, t),
       elevation: lerpDouble(a?.elevation, b?.elevation, t),
@@ -441,6 +458,7 @@ class WxBadgeStyle with Diagnosticable {
         'minHeight': minHeight,
         'maxHeight': maxHeight,
         'shape': shape,
+        'padding': padding,
         'clipBehavior': clipBehavior,
         'shadowColor': shadowColor,
         'elevation': elevation,
