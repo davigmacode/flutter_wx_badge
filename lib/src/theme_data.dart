@@ -12,6 +12,9 @@ import 'theme_preset.dart';
 @immutable
 class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     with Diagnosticable {
+  /// Whether to animate the badge decoration.
+  final bool animated;
+
   /// The animation curve to use when transitioning in a new badge content.
   final Curve curveIn;
 
@@ -32,6 +35,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// Creates a theme data that can be used for [BadgeTheme].
   const WxBadgeThemeData({
+    required this.animated,
     required this.curveIn,
     required this.curveOut,
     required this.duration,
@@ -42,6 +46,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// An [WxBadgeThemeData] with some reasonable default values.
   static const fallback = WxBadgeThemeData(
+    animated: false,
     curveIn: Curves.linear,
     curveOut: Curves.linear,
     duration: Duration(milliseconds: 200),
@@ -52,7 +57,8 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
 
   /// Creates a [WxBadgeThemeData] from another one that probably null.
   WxBadgeThemeData.from([WxBadgeThemeData? other])
-      : curveIn = other?.curveIn ?? fallback.curveIn,
+      : animated = other?.animated ?? fallback.animated,
+        curveIn = other?.curveIn ?? fallback.curveIn,
         curveOut = other?.curveOut ?? fallback.curveOut,
         duration = other?.duration ?? fallback.duration,
         position = other?.position ?? fallback.position,
@@ -67,6 +73,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   /// the given fields replaced with the new values.
   @override
   WxBadgeThemeData copyWith({
+    bool? animated,
     Curve? curveIn,
     Curve? curveOut,
     Duration? duration,
@@ -75,6 +82,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     WxBadgeStyle? style,
   }) {
     return WxBadgeThemeData(
+      animated: animated ?? this.animated,
       curveIn: curveIn ?? this.curveIn,
       curveOut: curveOut ?? this.curveOut,
       duration: duration ?? this.duration,
@@ -91,6 +99,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     if (other == null) return this;
 
     return copyWith(
+      animated: other.animated,
       curveIn: other.curveIn,
       curveOut: other.curveOut,
       duration: other.duration,
@@ -104,6 +113,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   WxBadgeThemeData lerp(ThemeExtension<WxBadgeThemeData>? other, double t) {
     if (other is! WxBadgeThemeData) return this;
     return WxBadgeThemeData(
+      animated: lerpBool(animated, other.animated, t) ?? animated,
       curveIn: lerpEnum(curveIn, other.curveIn, t) ?? curveIn,
       curveOut: lerpEnum(curveOut, other.curveOut, t) ?? curveOut,
       duration: lerpEnum(duration, other.duration, t) ?? duration,
@@ -114,6 +124,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   }
 
   Map<String, dynamic> toMap() => {
+        'animated': animated,
         'curveIn': curveIn,
         'curveOut': curveOut,
         'duration': duration,

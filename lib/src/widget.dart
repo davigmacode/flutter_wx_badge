@@ -11,18 +11,27 @@ class WxBadge extends StatelessWidget {
   /// Create a badge widget
   const WxBadge({
     super.key,
+    this.hidden = false,
+    this.animated,
     this.duration,
     this.curveIn,
     this.curveOut,
     this.transition = WxBadgeTransition.scale,
     this.layout = WxBadgeLayout.defaults,
-    this.hidden = false,
     this.position,
     this.offset,
     this.style,
     this.content,
     required this.child,
   });
+
+  /// Whether to animate the badge decoration.
+  final bool? animated;
+
+  /// Whether or not this badge is hidden.
+  ///
+  /// Must not be null. Defaults to false.
+  final bool hidden;
 
   /// The animation curve to use when transitioning in a new [content].
   final Curve? curveIn;
@@ -38,11 +47,6 @@ class WxBadge extends StatelessWidget {
 
   /// A function that wraps all of the children that are transitioning out, and the [child] that's transitioning in, with a widget that lays all of them out. This is called every time this widget is built. The function must not return null.
   final WxBadgeLayoutBuilder layout;
-
-  /// Whether or not this badge is hidden.
-  ///
-  /// Must not be null. Defaults to false.
-  final bool hidden;
 
   /// How to align the badge with the [child].
   final AlignmentGeometry? position;
@@ -71,6 +75,7 @@ class WxBadge extends StatelessWidget {
     final effectiveCurveIn = curveIn ?? badgeTheme.curveIn;
     final effectiveCurveOut = curveOut ?? badgeTheme.curveOut;
     final effectiveDuration = duration ?? badgeTheme.duration;
+    final effectiveAnimated = animated ?? badgeTheme.animated;
 
     Widget badge = SizedBox.shrink(
       key: ValueKey(content),
@@ -94,24 +99,45 @@ class WxBadge extends StatelessWidget {
       }
 
       // create shape with its decoration
-      badge = WxBox(
-        key: ValueKey(content),
-        width: badgeStyle.width,
-        height: badgeStyle.height,
-        constraints: badgeStyle.constraints,
-        clipBehavior: badgeStyle.clipBehavior,
-        shadowColor: badgeStyle.shadowColor,
-        elevation: badgeStyle.elevation,
-        color: badgeStyle.effectiveBackgroundColor,
-        borderColor: badgeStyle.effectiveBorderColor,
-        borderWidth: badgeStyle.borderWidth,
-        borderStyle: badgeStyle.borderStyle,
-        borderRadius: badgeStyle.borderRadius,
-        borderAlign: badgeStyle.borderAlign,
-        shape: badgeStyle.effectiveShape,
-        padding: badgeStyle.padding,
-        child: effectiveContent,
-      );
+      if (effectiveAnimated) {
+        badge = WxAnimatedBox(
+          key: ValueKey(content?.toString()),
+          width: badgeStyle.width,
+          height: badgeStyle.height,
+          constraints: badgeStyle.constraints,
+          clipBehavior: badgeStyle.clipBehavior,
+          shadowColor: badgeStyle.shadowColor,
+          elevation: badgeStyle.elevation,
+          color: badgeStyle.effectiveBackgroundColor,
+          borderColor: badgeStyle.effectiveBorderColor,
+          borderWidth: badgeStyle.borderWidth,
+          borderStyle: badgeStyle.borderStyle,
+          borderRadius: badgeStyle.borderRadius,
+          borderAlign: badgeStyle.borderAlign,
+          shape: badgeStyle.effectiveShape,
+          padding: badgeStyle.padding,
+          child: effectiveContent,
+        );
+      } else {
+        badge = WxBox(
+          key: ValueKey(content?.toString()),
+          width: badgeStyle.width,
+          height: badgeStyle.height,
+          constraints: badgeStyle.constraints,
+          clipBehavior: badgeStyle.clipBehavior,
+          shadowColor: badgeStyle.shadowColor,
+          elevation: badgeStyle.elevation,
+          color: badgeStyle.effectiveBackgroundColor,
+          borderColor: badgeStyle.effectiveBorderColor,
+          borderWidth: badgeStyle.borderWidth,
+          borderStyle: badgeStyle.borderStyle,
+          borderRadius: badgeStyle.borderRadius,
+          borderAlign: badgeStyle.borderAlign,
+          shape: badgeStyle.effectiveShape,
+          padding: badgeStyle.padding,
+          child: effectiveContent,
+        );
+      }
     }
 
     // build animation
