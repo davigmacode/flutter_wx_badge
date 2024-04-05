@@ -75,9 +75,7 @@ class WxBadge extends StatelessWidget {
     final effectiveDuration = duration ?? badgeTheme.duration;
     final effectiveAnimated = animated ?? badgeTheme.animated;
 
-    Widget badge = SizedBox.shrink(
-      key: ValueKey(content),
-    );
+    Widget badge = const SizedBox.shrink();
 
     if (visible) {
       Widget? effectiveContent;
@@ -99,7 +97,7 @@ class WxBadge extends StatelessWidget {
       // create shape with its decoration
       if (effectiveAnimated) {
         badge = WxAnimatedBox(
-          key: ValueKey(content?.toString()),
+          key: content?.key,
           width: badgeStyle.width,
           height: badgeStyle.height,
           constraints: badgeStyle.constraints,
@@ -118,7 +116,7 @@ class WxBadge extends StatelessWidget {
         );
       } else {
         badge = WxBox(
-          key: ValueKey(content?.toString()),
+          key: content?.key,
           width: badgeStyle.width,
           height: badgeStyle.height,
           constraints: badgeStyle.constraints,
