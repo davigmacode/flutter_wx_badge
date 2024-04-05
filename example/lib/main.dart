@@ -122,21 +122,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       hidden: count == 0,
                       position: WxBadgePosition.topRight,
                       offset: const Offset(8, -8),
-                      style: WxBadgeStyle.stadium(
+                      style: WxBadgeStyle.circle(
                         borderWidth: 2,
                         borderStyle: BorderStyle.solid,
                         borderColor: Theme.of(context).colorScheme.surface,
                         backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 2,
-                        ),
+                        padding: const EdgeInsets.all(6),
                       ),
                       content: Text(
                         count.toString(),
                         style: const TextStyle(height: 1.15),
                       ),
-                      transition: WxBadgeTransition.scale,
+                      transition: WxBadgeTransition.rotate(
+                        scaleFactor: 2,
+                        clockwise: false,
+                      ),
                       child: const WxAvatar(
                         image: NetworkImage('https://i.pravatar.cc/50?u=2'),
                         elevation: 3.0,
@@ -147,7 +147,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     WxBadge(
                       hidden: count == 0,
                       position: WxBadgePosition.topRight,
-                      offset: const Offset(8, -8),
+                      offset: count < 10
+                          ? Offset.fromDirection(-.8, 10)
+                          : Offset.fromDirection(-.5, 14),
                       style: const WxBadgeStyle.stadium(
                         elevation: 2,
                         backgroundColor: Colors.blue,
@@ -156,11 +158,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           vertical: 2,
                         ),
                       ),
+                      transition: WxBadgeTransition.slide(210, scaleFactor: .9),
                       content: Text(
                         count.toString(),
                         style: const TextStyle(height: 1.15),
                       ),
-                      transition: WxBadgeTransition.scale,
                       child: const Icon(Icons.shopping_cart),
                     ),
                     WxAnchor.circle(
@@ -193,7 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           vertical: 2,
                         ),
                       ),
-                      transition: WxBadgeTransition.scale,
                       child: const WxAvatar.circle(
                         image: NetworkImage('https://i.pravatar.cc/50?u=20'),
                         borderWidth: 2,
