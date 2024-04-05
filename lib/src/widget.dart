@@ -16,7 +16,7 @@ class WxBadge extends StatelessWidget {
     this.duration,
     this.curveIn,
     this.curveOut,
-    this.transition = WxBadgeTransition.scale,
+    this.transition,
     this.layout = WxBadgeLayout.defaults,
     this.position,
     this.offset,
@@ -43,7 +43,7 @@ class WxBadge extends StatelessWidget {
   final Duration? duration;
 
   /// A function that wraps a new [content] with an animation that transitions the [content] in when the animation runs in the forward direction and out when the animation runs in the reverse direction. This is only called when a new [content] is set (not for each build), or when a new [transition] is set. If a new [transition] is set, then the transition is rebuilt for the current content and all previous children using the new [transition]. The function must not return null.
-  final WxBadgeTransitionBuilder transition;
+  final WxBadgeTransitionBuilder? transition;
 
   /// A function that wraps all of the children that are transitioning out, and the [child] that's transitioning in, with a widget that lays all of them out. This is called every time this widget is built. The function must not return null.
   final WxBadgeLayoutBuilder layout;
@@ -141,14 +141,16 @@ class WxBadge extends StatelessWidget {
     }
 
     // build animation
-    badge = AnimatedSwitcher(
-      duration: effectiveDuration,
-      switchInCurve: effectiveCurveIn,
-      switchOutCurve: effectiveCurveOut,
-      transitionBuilder: transition,
-      layoutBuilder: layout,
-      child: badge,
-    );
+    if (transition != null) {
+      badge = AnimatedSwitcher(
+        duration: effectiveDuration,
+        switchInCurve: effectiveCurveIn,
+        switchOutCurve: effectiveCurveOut,
+        transitionBuilder: transition!,
+        layoutBuilder: layout,
+        child: badge,
+      );
+    }
 
     // position the badge
     badge = Positioned(
