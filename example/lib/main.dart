@@ -3,6 +3,7 @@ import 'package:wx_badge/wx_badge.dart';
 import 'package:wx_avatar/wx_avatar.dart';
 import 'package:wx_anchor/wx_anchor.dart';
 import 'package:wx_text/wx_text.dart';
+import 'package:animated_switcher_transitions/animated_switcher_transitions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -133,10 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         count.toString(),
                         style: const TextStyle(height: 1.15),
                       ),
-                      transition: WxBadgeTransition.rotate(
-                        scaleFactor: 2,
-                        clockwise: false,
-                      ),
+                      transition: AnimatedSwitcherTransitions.zoomOut,
                       child: const WxAvatar(
                         image: NetworkImage('https://i.pravatar.cc/50?u=2'),
                         elevation: 3.0,
@@ -158,7 +156,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           vertical: 2,
                         ),
                       ),
-                      transition: WxBadgeTransition.slide(210, scaleFactor: .9),
+                      transition: AnimatedSwitcherTransitions.slide(
+                        210,
+                        scaleFactor: .9,
+                      ),
                       content: Text(
                         count.toString(),
                         style: const TextStyle(height: 1.15),
