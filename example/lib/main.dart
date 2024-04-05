@@ -132,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       content: Text(
                         count.toString(),
+                        key: ValueKey(count),
                         style: const TextStyle(height: 1.15),
                       ),
                       transition: AnimatedSwitcherTransitions.zoomOut,
@@ -157,11 +158,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       transition: AnimatedSwitcherTransitions.slide(
-                        210,
+                        115,
                         scaleFactor: .9,
                       ),
                       content: Text(
                         count.toString(),
+                        key: ValueKey(count),
                         style: const TextStyle(height: 1.15),
                       ),
                       child: const Icon(Icons.shopping_cart),

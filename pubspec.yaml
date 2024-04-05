@@ -10,8 +10,8 @@ topics:
   - widgetarian
 
 funding:
- - https://buymeacoffee.com/davigmacode
- - https://ko-fi.com/davigmacode
+  - https://buymeacoffee.com/davigmacode
+  - https://ko-fi.com/davigmacode
 
 environment:
   sdk: '>=2.17.0 <4.0.0'

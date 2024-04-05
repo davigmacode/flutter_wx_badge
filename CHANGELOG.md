@@ -1,3 +1,7 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+* Added badge widget.
+* Added badge style.
+* Added badge theme widget.
+* Added badge theme data.
+* Added badge theme preset.
