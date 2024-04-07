@@ -110,7 +110,7 @@ class WxBadge extends StatelessWidget {
           borderStyle: badgeStyle.borderStyle,
           borderRadius: badgeStyle.borderRadius,
           borderAlign: badgeStyle.borderAlign,
-          shape: badgeStyle.effectiveShape,
+          border: badgeStyle.effectiveShape,
           padding: badgeStyle.padding,
           child: effectiveContent,
         );
@@ -129,7 +129,7 @@ class WxBadge extends StatelessWidget {
           borderStyle: badgeStyle.borderStyle,
           borderRadius: badgeStyle.borderRadius,
           borderAlign: badgeStyle.borderAlign,
-          shape: badgeStyle.effectiveShape,
+          border: badgeStyle.effectiveShape,
           padding: badgeStyle.padding,
           child: effectiveContent,
         );

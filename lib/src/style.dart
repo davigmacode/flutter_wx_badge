@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wx_utils/wx_utils.dart';
-import 'types.dart';
 
 /// The style to be applied to badge widget
 @immutable
@@ -14,7 +13,7 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
-    this.shape,
+    this.border,
     this.padding,
     this.clipBehavior,
     this.shadowColor,
@@ -60,7 +59,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderAlign,
     this.borderStyle,
     this.borderRadius,
-  })  : shape = WxBadgeShape.rectangle,
+  })  : border = const RoundedRectangleBorder(),
         width = size,
         height = size,
         minWidth = minSize,
@@ -91,7 +90,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderWidth,
     this.borderAlign,
     this.borderStyle,
-  })  : shape = WxBadgeShape.circle,
+  })  : border = const CircleBorder(),
         borderRadius = null,
         width = radius != null ? radius * 2 : null,
         height = radius != null ? radius * 2 : null,
@@ -126,7 +125,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderWidth,
     this.borderAlign,
     this.borderStyle,
-  })  : shape = WxBadgeShape.stadium,
+  })  : border = const StadiumBorder(),
         borderRadius = null;
 
   /// Create a badge's style from another style
@@ -137,7 +136,7 @@ class WxBadgeStyle with Diagnosticable {
         maxWidth = other?.maxWidth,
         minHeight = other?.minHeight,
         maxHeight = other?.maxHeight,
-        shape = other?.shape,
+        border = other?.border,
         padding = other?.padding,
         clipBehavior = other?.clipBehavior,
         shadowColor = other?.shadowColor,
@@ -160,7 +159,7 @@ class WxBadgeStyle with Diagnosticable {
 
   /// An [WxBadgeStyle] with some reasonable default values.
   static const defaults = WxBadgeStyle(
-    shape: WxBadgeShape.rectangle,
+    border: RoundedRectangleBorder(),
     borderRadius: BorderRadius.all(Radius.circular(4)),
     borderWidth: 2.0,
     borderStyle: BorderStyle.none,
@@ -169,7 +168,7 @@ class WxBadgeStyle with Diagnosticable {
   );
 
   /// The type of badge's shape.
-  final WxBadgeShape? shape;
+  final OutlinedBorder? border;
 
   /// The amount of space by which to inset the badge content.
   final EdgeInsetsGeometry? padding;
@@ -273,8 +272,8 @@ class WxBadgeStyle with Diagnosticable {
         )
       : null;
 
-  /// If [shape] is `null`, then fallback to default value
-  WxBadgeShape get effectiveShape => shape ?? defaults.shape!;
+  /// If [border] is `null`, then fallback to default value
+  OutlinedBorder get effectiveShape => border ?? defaults.border!;
 
   /// Computed background color with opacity and alpha
   Color? get effectiveBackgroundColor {
@@ -326,7 +325,7 @@ class WxBadgeStyle with Diagnosticable {
     double? maxWidth,
     double? minHeight,
     double? maxHeight,
-    WxBadgeShape? shape,
+    OutlinedBorder? border,
     EdgeInsetsGeometry? padding,
     Clip? clipBehavior,
     Color? shadowColor,
@@ -355,7 +354,7 @@ class WxBadgeStyle with Diagnosticable {
       maxWidth: maxWidth ?? this.maxWidth,
       minHeight: minHeight ?? this.minHeight,
       maxHeight: maxHeight ?? this.maxHeight,
-      shape: shape ?? this.shape,
+      border: border ?? this.border,
       padding: padding ?? this.padding,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       shadowColor: shadowColor ?? this.shadowColor,
@@ -391,7 +390,7 @@ class WxBadgeStyle with Diagnosticable {
       maxWidth: other.maxWidth,
       minHeight: other.minHeight,
       maxHeight: other.maxHeight,
-      shape: other.shape,
+      border: other.border,
       padding: other.padding,
       clipBehavior: other.clipBehavior,
       shadowColor: other.shadowColor,
@@ -424,7 +423,7 @@ class WxBadgeStyle with Diagnosticable {
       maxWidth: lerpDouble(a?.maxWidth, b?.maxWidth, t),
       minHeight: lerpDouble(a?.minHeight, b?.minHeight, t),
       maxHeight: lerpDouble(a?.maxHeight, b?.maxHeight, t),
-      shape: t < 0.5 ? a?.shape : b?.shape,
+      border: OutlinedBorder.lerp(a?.border, b?.border, t),
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
       shadowColor: Color.lerp(a?.shadowColor, b?.shadowColor, t),
@@ -457,7 +456,7 @@ class WxBadgeStyle with Diagnosticable {
         'maxWidth': maxWidth,
         'minHeight': minHeight,
         'maxHeight': maxHeight,
-        'shape': shape,
+        'border': border,
         'padding': padding,
         'clipBehavior': clipBehavior,
         'shadowColor': shadowColor,
