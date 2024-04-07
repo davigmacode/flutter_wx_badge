@@ -244,25 +244,25 @@ packages:
     dependency: "direct main"
     description:
       name: wx_avatar
-      sha256: d45f012d1246829dfc5c1e755d9d7084ef0882f1c8eb70dd2e3ab448e91ce40d
+      sha256: d025112f71ba310b7c565f29efbdcbfce78ef2372cab0676b01f44cb77f9e165
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0"
   wx_badge:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0"
+    version: "2.0.0"
   wx_box:
     dependency: transitive
     description:
       name: wx_box
-      sha256: "2e0d996add2d83c5fd31ba842012faf119baca50e829c0aa1ce8d908c3e307b8"
+      sha256: "2f71338f8c6ab8f6d7a51ac2bdc9e9baf13e334e1db13772792b8d1198d34379"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.0.0"
   wx_text:
     dependency: "direct main"
     description:

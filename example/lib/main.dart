@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Wrapper(
                 title: 'Label',
                 child: Wrap(
-                  spacing: 25,
+                  spacing: 35,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     WxBadge(
@@ -102,6 +102,34 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white,
                           ),
                         ),
+                      ),
+                    ),
+                    WxBadge(
+                      position: WxBadgePosition.bottomRight,
+                      offset: const Offset(3, 1),
+                      style: WxBadgeStyle(
+                        width: 20,
+                        height: 20,
+                        border: const StarBorder(
+                          points: 8,
+                          pointRounding: .8,
+                          innerRadiusRatio: .7,
+                        ),
+                        borderWidth: 3,
+                        borderStyle: BorderStyle.solid,
+                        borderColor: Theme.of(context).colorScheme.surface,
+                        backgroundColor: Colors.blue,
+                      ),
+                      content: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                      child: const WxAvatar.circle(
+                        radius: 30,
+                        image: NetworkImage('https://i.pravatar.cc/100?u=6'),
+                        elevation: 3.0,
+                        backgroundColor: Colors.red,
+                        child: Text('Wx'),
                       ),
                     ),
                   ],
@@ -186,9 +214,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     WxBadge(
                       animated: true,
                       position: WxBadgePosition.bottomRight,
-                      offset: const Offset(1, 1),
-                      style: WxBadgeStyle.circle(
-                        radius: 5,
+                      offset: const Offset(3, 1),
+                      style: WxBadgeStyle(
+                        width: 12,
+                        height: 12,
+                        border: online
+                            ? const StarBorder(
+                                points: 6,
+                                innerRadiusRatio: .7,
+                              )
+                            : const CircleBorder(),
                         borderWidth: 2,
                         borderStyle: BorderStyle.solid,
                         borderColor: Theme.of(context).colorScheme.surface,
