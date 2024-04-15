@@ -21,8 +21,11 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
   /// The animation curve to use when transitioning a previous badge content out.
   final Curve curveOut;
 
-  /// The duration over which to animate the parameters of badge widget.
+  /// The duration of the transition from the old [content] value to the new one.
   final Duration duration;
+
+  /// The duration of the transition from the new [content] value to the old one.
+  final Duration? durationOut;
 
   /// Align the badge content within the child.
   final AlignmentGeometry position;
@@ -39,6 +42,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     required this.curveIn,
     required this.curveOut,
     required this.duration,
+    this.durationOut,
     required this.position,
     required this.offset,
     required this.style,
@@ -61,13 +65,14 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
         curveIn = other?.curveIn ?? fallback.curveIn,
         curveOut = other?.curveOut ?? fallback.curveOut,
         duration = other?.duration ?? fallback.duration,
+        durationOut = other?.durationOut ?? fallback.durationOut,
         position = other?.position ?? fallback.position,
         offset = other?.offset ?? fallback.offset,
         style = other?.style ?? fallback.style;
 
   /// A [WxBadgeThemeData] with default values.
   factory WxBadgeThemeData.defaults(BuildContext context) =>
-      BadgeThemeDefaults(context);
+      WxBadgeThemeDefaults(context);
 
   /// Creates a copy of this [WxBadgeThemeData] but with
   /// the given fields replaced with the new values.
@@ -77,6 +82,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
     Curve? curveIn,
     Curve? curveOut,
     Duration? duration,
+    Duration? durationOut,
     AlignmentGeometry? position,
     Offset? offset,
     WxBadgeStyle? style,
@@ -86,6 +92,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
       curveIn: curveIn ?? this.curveIn,
       curveOut: curveOut ?? this.curveOut,
       duration: duration ?? this.duration,
+      durationOut: durationOut ?? this.durationOut,
       position: position ?? this.position,
       offset: offset ?? this.offset,
       style: this.style.merge(style),
@@ -103,6 +110,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
       curveIn: other.curveIn,
       curveOut: other.curveOut,
       duration: other.duration,
+      durationOut: other.durationOut,
       position: other.position,
       offset: other.offset,
       style: other.style,
@@ -117,6 +125,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
       curveIn: lerpEnum(curveIn, other.curveIn, t) ?? curveIn,
       curveOut: lerpEnum(curveOut, other.curveOut, t) ?? curveOut,
       duration: lerpEnum(duration, other.duration, t) ?? duration,
+      durationOut: lerpEnum(durationOut, other.durationOut, t) ?? durationOut,
       position: AlignmentGeometry.lerp(position, other.position, t) ?? position,
       offset: Offset.lerp(offset, other.offset, t) ?? offset,
       style: WxBadgeStyle.lerp(style, other.style, t) ?? style,
@@ -128,6 +137,7 @@ class WxBadgeThemeData extends ThemeExtension<WxBadgeThemeData>
         'curveIn': curveIn,
         'curveOut': curveOut,
         'duration': duration,
+        'durationOut': durationOut,
         'position': position,
         'offset': offset,
         'style': style,

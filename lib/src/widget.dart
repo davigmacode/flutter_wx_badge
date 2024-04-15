@@ -12,6 +12,7 @@ class WxBadge extends StatelessWidget {
     this.hidden = false,
     this.animated,
     this.duration,
+    this.durationOut,
     this.curveIn,
     this.curveOut,
     this.transition,
@@ -37,8 +38,11 @@ class WxBadge extends StatelessWidget {
   /// The animation curve to use when transitioning a previous [content] out.
   final Curve? curveOut;
 
-  /// The duration over which to animate the parameters of this widget.
+  /// The duration of the transition from the old [content] value to the new one.
   final Duration? duration;
+
+  /// The duration of the transition from the new [content] value to the old one.
+  final Duration? durationOut;
 
   /// A function that wraps a new [content] with an animation that transitions the [content] in when the animation runs in the forward direction and out when the animation runs in the reverse direction. This is only called when a new [content] is set (not for each build), or when a new [transition] is set. If a new [transition] is set, then the transition is rebuilt for the current content and all previous children using the new [transition]. The function must not return null.
   final AnimatedSwitcherTransitionBuilder? transition;
@@ -73,6 +77,7 @@ class WxBadge extends StatelessWidget {
     final effectiveCurveIn = curveIn ?? badgeTheme.curveIn;
     final effectiveCurveOut = curveOut ?? badgeTheme.curveOut;
     final effectiveDuration = duration ?? badgeTheme.duration;
+    final effectiveDurationOut = durationOut ?? badgeTheme.durationOut;
     final effectiveAnimated = animated ?? badgeTheme.animated;
 
     Widget badge = const SizedBox.shrink();
@@ -146,6 +151,7 @@ class WxBadge extends StatelessWidget {
     if (transition != null) {
       badge = AnimatedSwitcher(
         duration: effectiveDuration,
+        reverseDuration: effectiveDurationOut,
         switchInCurve: effectiveCurveIn,
         switchOutCurve: effectiveCurveOut,
         transitionBuilder: transition!,
@@ -178,6 +184,7 @@ class WxBadge extends StatelessWidget {
     properties.add(DiagnosticsProperty<Curve?>('curveIn', curveIn));
     properties.add(DiagnosticsProperty<Curve?>('curveOut', curveOut));
     properties.add(DiagnosticsProperty<Duration?>('duration', duration));
+    properties.add(DiagnosticsProperty<Duration?>('durationOut', durationOut));
     properties.add(DiagnosticsProperty<bool>('hidden', hidden));
     properties
         .add(DiagnosticsProperty<AlignmentGeometry?>('alignment', position));
