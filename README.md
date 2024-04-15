@@ -54,7 +54,7 @@ WxBadge(
   child: const WxAvatar.circle(
     image: NetworkImage('https://i.pravatar.cc/50?u=20'),
     borderWidth: 2,
-    borderAlign: 3,
+    borderOffset: 3,
     borderStyle: BorderStyle.solid,
     borderColor: Colors.blue,
     backgroundColor: Colors.red,
