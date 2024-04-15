@@ -13,6 +13,9 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
+    this.image,
+    this.shadows,
+    this.gradient,
     this.border,
     this.padding,
     this.clipBehavior,
@@ -40,6 +43,9 @@ class WxBadgeStyle with Diagnosticable {
     double? size,
     double? minSize,
     double? maxSize,
+    this.image,
+    this.shadows,
+    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
@@ -72,6 +78,9 @@ class WxBadgeStyle with Diagnosticable {
     double? radius,
     double? minRadius,
     double? maxRadius,
+    this.image,
+    this.shadows,
+    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
@@ -107,6 +116,9 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
+    this.image,
+    this.shadows,
+    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
@@ -136,6 +148,9 @@ class WxBadgeStyle with Diagnosticable {
         maxWidth = other?.maxWidth,
         minHeight = other?.minHeight,
         maxHeight = other?.maxHeight,
+        image = other?.image,
+        shadows = other?.shadows,
+        gradient = other?.gradient,
         border = other?.border,
         padding = other?.padding,
         clipBehavior = other?.clipBehavior,
@@ -190,6 +205,21 @@ class WxBadgeStyle with Diagnosticable {
 
   /// The maximum height of the badge
   final double? maxHeight;
+
+  /// An image to paint inside the shape (clipped to its outline).
+  ///
+  /// The image is drawn over the [color] or [gradient].
+  final DecorationImage? image;
+
+  /// A list of shadows cast by the [border].
+  final List<BoxShadow>? shadows;
+
+  /// A gradient to use when filling the shape.
+  ///
+  /// The gradient is under the [image].
+  ///
+  /// If a [color] is specified, [gradient] must be null.
+  final Gradient? gradient;
 
   /// The badge's content will be clipped (or not) according to this option.
   ///
@@ -456,6 +486,9 @@ class WxBadgeStyle with Diagnosticable {
         'maxWidth': maxWidth,
         'minHeight': minHeight,
         'maxHeight': maxHeight,
+        'image': image,
+        'shadows': shadows,
+        'gradient': gradient,
         'border': border,
         'padding': padding,
         'clipBehavior': clipBehavior,
