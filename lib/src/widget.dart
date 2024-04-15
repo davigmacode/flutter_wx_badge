@@ -13,7 +13,7 @@ class WxBadge extends StatelessWidget {
     this.animated,
     this.duration,
     this.durationOut,
-    this.curveIn,
+    this.curve,
     this.curveOut,
     this.transition,
     this.layout = AnimatedSwitcher.defaultLayoutBuilder,
@@ -33,7 +33,7 @@ class WxBadge extends StatelessWidget {
   final bool hidden;
 
   /// The animation curve to use when transitioning in a new [content].
-  final Curve? curveIn;
+  final Curve? curve;
 
   /// The animation curve to use when transitioning a previous [content] out.
   final Curve? curveOut;
@@ -74,8 +74,8 @@ class WxBadge extends StatelessWidget {
     final badgeStyle = badgeTheme.style.merge(style);
     final effectivePosition = position ?? badgeTheme.position;
     final effectiveOffset = offset ?? badgeTheme.offset;
-    final effectiveCurveIn = curveIn ?? badgeTheme.curveIn;
-    final effectiveCurveOut = curveOut ?? badgeTheme.curveOut;
+    final effectiveCurve = curve ?? badgeTheme.curve;
+    final effectiveCurveOut = curveOut ?? badgeTheme.curveOut ?? effectiveCurve;
     final effectiveDuration = duration ?? badgeTheme.duration;
     final effectiveDurationOut = durationOut ?? badgeTheme.durationOut;
     final effectiveAnimated = animated ?? badgeTheme.animated;
@@ -152,7 +152,7 @@ class WxBadge extends StatelessWidget {
       badge = AnimatedSwitcher(
         duration: effectiveDuration,
         reverseDuration: effectiveDurationOut,
-        switchInCurve: effectiveCurveIn,
+        switchInCurve: effectiveCurve,
         switchOutCurve: effectiveCurveOut,
         transitionBuilder: transition!,
         layoutBuilder: layout,
@@ -181,7 +181,7 @@ class WxBadge extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Curve?>('curveIn', curveIn));
+    properties.add(DiagnosticsProperty<Curve?>('curve', curve));
     properties.add(DiagnosticsProperty<Curve?>('curveOut', curveOut));
     properties.add(DiagnosticsProperty<Duration?>('duration', duration));
     properties.add(DiagnosticsProperty<Duration?>('durationOut', durationOut));

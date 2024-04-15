@@ -39,7 +39,7 @@ class WxBadgeTheme extends InheritedTheme {
           key: key,
           data: parent.merge(data).copyWith(
                 animated: animated,
-                curveIn: curveIn,
+                curve: curveIn,
                 curveOut: curveOut,
                 duration: duration,
                 position: position,
