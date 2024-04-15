@@ -117,9 +117,9 @@ class WxBadge extends StatelessWidget {
           borderOffset: badgeStyle.borderOffset,
           border: badgeStyle.effectiveShape,
           padding: badgeStyle.padding,
-          image: badgeStyle.image,
+          image: badgeStyle.backgroundImage,
           shadows: badgeStyle.shadows,
-          gradient: badgeStyle.gradient,
+          gradient: badgeStyle.backgroundGradient,
           child: effectiveContent,
         );
       } else {
@@ -139,9 +139,9 @@ class WxBadge extends StatelessWidget {
           borderOffset: badgeStyle.borderOffset,
           border: badgeStyle.effectiveShape,
           padding: badgeStyle.padding,
-          image: badgeStyle.image,
+          image: badgeStyle.backgroundImage,
           shadows: badgeStyle.shadows,
-          gradient: badgeStyle.gradient,
+          gradient: badgeStyle.backgroundGradient,
           child: effectiveContent,
         );
       }

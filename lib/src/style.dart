@@ -13,9 +13,7 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
-    this.image,
     this.shadows,
-    this.gradient,
     this.border,
     this.padding,
     this.clipBehavior,
@@ -26,6 +24,8 @@ class WxBadgeStyle with Diagnosticable {
     this.foregroundColor,
     this.foregroundOpacity,
     this.foregroundAlpha,
+    this.backgroundImage,
+    this.backgroundGradient,
     this.backgroundColor,
     this.backgroundOpacity,
     this.backgroundAlpha,
@@ -43,15 +43,15 @@ class WxBadgeStyle with Diagnosticable {
     double? size,
     double? minSize,
     double? maxSize,
-    this.image,
     this.shadows,
-    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
+    this.backgroundImage,
+    this.backgroundGradient,
     this.foregroundColor,
     this.foregroundOpacity,
     this.foregroundAlpha,
@@ -78,15 +78,15 @@ class WxBadgeStyle with Diagnosticable {
     double? radius,
     double? minRadius,
     double? maxRadius,
-    this.image,
     this.shadows,
-    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
+    this.backgroundImage,
+    this.backgroundGradient,
     this.foregroundColor,
     this.foregroundOpacity,
     this.foregroundAlpha,
@@ -116,9 +116,7 @@ class WxBadgeStyle with Diagnosticable {
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
-    this.image,
     this.shadows,
-    this.gradient,
     this.padding,
     this.clipBehavior,
     this.elevationColor,
@@ -128,6 +126,8 @@ class WxBadgeStyle with Diagnosticable {
     this.foregroundColor,
     this.foregroundOpacity,
     this.foregroundAlpha,
+    this.backgroundImage,
+    this.backgroundGradient,
     this.backgroundColor,
     this.backgroundOpacity,
     this.backgroundAlpha,
@@ -148,9 +148,7 @@ class WxBadgeStyle with Diagnosticable {
         maxWidth = other?.maxWidth,
         minHeight = other?.minHeight,
         maxHeight = other?.maxHeight,
-        image = other?.image,
         shadows = other?.shadows,
-        gradient = other?.gradient,
         border = other?.border,
         padding = other?.padding,
         clipBehavior = other?.clipBehavior,
@@ -161,6 +159,8 @@ class WxBadgeStyle with Diagnosticable {
         foregroundColor = other?.foregroundColor,
         foregroundOpacity = other?.foregroundOpacity,
         foregroundAlpha = other?.foregroundAlpha,
+        backgroundImage = other?.backgroundImage,
+        backgroundGradient = other?.backgroundGradient,
         backgroundColor = other?.backgroundColor,
         backgroundOpacity = other?.backgroundOpacity,
         backgroundAlpha = other?.backgroundAlpha,
@@ -206,20 +206,8 @@ class WxBadgeStyle with Diagnosticable {
   /// The maximum height of the badge
   final double? maxHeight;
 
-  /// An image to paint inside the shape (clipped to its outline).
-  ///
-  /// The image is drawn over the [color] or [gradient].
-  final DecorationImage? image;
-
   /// A list of shadows cast by the [border].
   final List<BoxShadow>? shadows;
-
-  /// A gradient to use when filling the shape.
-  ///
-  /// The gradient is under the [image].
-  ///
-  /// If a [color] is specified, [gradient] must be null.
-  final Gradient? gradient;
 
   /// The badge's content will be clipped (or not) according to this option.
   ///
@@ -254,6 +242,18 @@ class WxBadgeStyle with Diagnosticable {
 
   /// Alpha to be apply to [foregroundColor].
   final int? foregroundAlpha;
+
+  /// An image to paint inside the shape (clipped to its outline).
+  ///
+  /// The image is drawn over the [backgroundColor] or [backgroundGradient].
+  final DecorationImage? backgroundImage;
+
+  /// A gradient to use when filling the shape.
+  ///
+  /// The gradient is under the [backgroundImage].
+  ///
+  /// If a [backgroundColor] is specified, [backgroundGradient] must be null.
+  final Gradient? backgroundGradient;
 
   /// Color to be used for the badge's background.
   final Color? backgroundColor;
@@ -307,13 +307,15 @@ class WxBadgeStyle with Diagnosticable {
 
   /// Computed background color with opacity and alpha
   Color? get effectiveBackgroundColor {
-    return backgroundColor != null
-        ? WxColors.withTransparency(
-            backgroundColor!,
-            opacity: backgroundOpacity,
-            alpha: backgroundAlpha,
-          )
-        : WxColors.transparent;
+    return backgroundGradient == null
+        ? backgroundColor != null
+            ? WxColors.withTransparency(
+                backgroundColor!,
+                opacity: backgroundOpacity,
+                alpha: backgroundAlpha,
+              )
+            : null
+        : null;
   }
 
   /// Computed border color with opacity and alpha
@@ -360,12 +362,15 @@ class WxBadgeStyle with Diagnosticable {
     Clip? clipBehavior,
     Color? elevationColor,
     double? elevation,
+    List<BoxShadow>? shadows,
     TextStyle? foregroundStyle,
     double? foregroundSize,
     Color? foregroundColor,
     double? foregroundOpacity,
     int? foregroundAlpha,
     double? foregroundSpacing,
+    DecorationImage? backgroundImage,
+    Gradient? backgroundGradient,
     Color? backgroundColor,
     double? backgroundOpacity,
     int? backgroundAlpha,
@@ -389,11 +394,14 @@ class WxBadgeStyle with Diagnosticable {
       clipBehavior: clipBehavior ?? this.clipBehavior,
       elevationColor: elevationColor ?? this.elevationColor,
       elevation: elevation ?? this.elevation,
+      shadows: shadows ?? this.shadows,
       foregroundStyle: foregroundStyle ?? this.foregroundStyle,
       foregroundSize: foregroundSize ?? this.foregroundSize,
       foregroundColor: foregroundColor ?? this.foregroundColor,
       foregroundOpacity: foregroundOpacity ?? this.foregroundOpacity,
       foregroundAlpha: foregroundAlpha ?? this.foregroundAlpha,
+      backgroundImage: backgroundImage ?? this.backgroundImage,
+      backgroundGradient: backgroundGradient ?? this.backgroundGradient,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       backgroundOpacity: backgroundOpacity ?? this.backgroundOpacity,
       backgroundAlpha: backgroundAlpha ?? this.backgroundAlpha,
@@ -425,11 +433,14 @@ class WxBadgeStyle with Diagnosticable {
       clipBehavior: other.clipBehavior,
       elevationColor: other.elevationColor,
       elevation: other.elevation,
+      shadows: other.shadows,
       foregroundStyle: other.foregroundStyle,
       foregroundSize: other.foregroundSize,
       foregroundColor: other.foregroundColor,
       foregroundOpacity: other.foregroundOpacity,
       foregroundAlpha: other.foregroundAlpha,
+      backgroundImage: other.backgroundImage,
+      backgroundGradient: other.backgroundGradient,
       backgroundColor: other.backgroundColor,
       backgroundOpacity: other.backgroundOpacity,
       backgroundAlpha: other.backgroundAlpha,
@@ -458,6 +469,7 @@ class WxBadgeStyle with Diagnosticable {
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
       elevationColor: Color.lerp(a?.elevationColor, b?.elevationColor, t),
       elevation: lerpDouble(a?.elevation, b?.elevation, t),
+      shadows: BoxShadow.lerpList(a?.shadows, b?.shadows, t),
       foregroundStyle:
           TextStyle.lerp(a?.foregroundStyle, b?.foregroundStyle, t),
       foregroundSize: lerpDouble(a?.foregroundSize, b?.foregroundSize, t),
@@ -465,6 +477,10 @@ class WxBadgeStyle with Diagnosticable {
       foregroundOpacity:
           lerpDouble(a?.foregroundOpacity, b?.foregroundOpacity, t),
       foregroundAlpha: lerpInt(a?.foregroundAlpha, b?.foregroundAlpha, t),
+      backgroundImage:
+          DecorationImage.lerp(a?.backgroundImage, b?.backgroundImage, t),
+      backgroundGradient:
+          Gradient.lerp(a?.backgroundGradient, b?.backgroundGradient, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       backgroundOpacity:
           lerpDouble(a?.backgroundOpacity, b?.backgroundOpacity, t),
@@ -486,9 +502,7 @@ class WxBadgeStyle with Diagnosticable {
         'maxWidth': maxWidth,
         'minHeight': minHeight,
         'maxHeight': maxHeight,
-        'image': image,
         'shadows': shadows,
-        'gradient': gradient,
         'border': border,
         'padding': padding,
         'clipBehavior': clipBehavior,
@@ -499,6 +513,8 @@ class WxBadgeStyle with Diagnosticable {
         'foregroundColor': foregroundColor,
         'foregroundOpacity': foregroundOpacity,
         'foregroundAlpha': foregroundAlpha,
+        'backgroundImage': backgroundImage,
+        'backgroundGradient': backgroundGradient,
         'backgroundColor': backgroundColor,
         'backgroundOpacity': backgroundOpacity,
         'backgroundAlpha': backgroundAlpha,
