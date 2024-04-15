@@ -21,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
   wx_utils: ^0.0.4
-  wx_box: ^3.0.0
+  wx_box: ^4.0.0
 
 dev_dependencies:
   flutter_test:

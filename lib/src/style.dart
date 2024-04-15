@@ -16,7 +16,7 @@ class WxBadgeStyle with Diagnosticable {
     this.border,
     this.padding,
     this.clipBehavior,
-    this.shadowColor,
+    this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
@@ -30,7 +30,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderOpacity,
     this.borderAlpha,
     this.borderWidth,
-    this.borderAlign,
+    this.borderOffset,
     this.borderStyle,
     this.borderRadius,
   });
@@ -42,7 +42,7 @@ class WxBadgeStyle with Diagnosticable {
     double? maxSize,
     this.padding,
     this.clipBehavior,
-    this.shadowColor,
+    this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
@@ -52,15 +52,15 @@ class WxBadgeStyle with Diagnosticable {
     this.backgroundColor,
     this.backgroundOpacity,
     this.backgroundAlpha,
+    this.border,
     this.borderColor,
     this.borderOpacity,
     this.borderAlpha,
     this.borderWidth,
-    this.borderAlign,
+    this.borderOffset,
     this.borderStyle,
     this.borderRadius,
-  })  : border = const RoundedRectangleBorder(),
-        width = size,
+  })  : width = size,
         height = size,
         minWidth = minSize,
         maxWidth = maxSize,
@@ -74,7 +74,7 @@ class WxBadgeStyle with Diagnosticable {
     double? maxRadius,
     this.padding,
     this.clipBehavior,
-    this.shadowColor,
+    this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
@@ -88,7 +88,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderOpacity,
     this.borderAlpha,
     this.borderWidth,
-    this.borderAlign,
+    this.borderOffset,
     this.borderStyle,
   })  : border = const CircleBorder(),
         borderRadius = null,
@@ -109,7 +109,7 @@ class WxBadgeStyle with Diagnosticable {
     this.maxHeight,
     this.padding,
     this.clipBehavior,
-    this.shadowColor,
+    this.elevationColor,
     this.elevation,
     this.foregroundStyle,
     this.foregroundSize,
@@ -123,7 +123,7 @@ class WxBadgeStyle with Diagnosticable {
     this.borderOpacity,
     this.borderAlpha,
     this.borderWidth,
-    this.borderAlign,
+    this.borderOffset,
     this.borderStyle,
   })  : border = const StadiumBorder(),
         borderRadius = null;
@@ -139,7 +139,7 @@ class WxBadgeStyle with Diagnosticable {
         border = other?.border,
         padding = other?.padding,
         clipBehavior = other?.clipBehavior,
-        shadowColor = other?.shadowColor,
+        elevationColor = other?.elevationColor,
         elevation = other?.elevation,
         foregroundStyle = other?.foregroundStyle,
         foregroundSize = other?.foregroundSize,
@@ -153,7 +153,7 @@ class WxBadgeStyle with Diagnosticable {
         borderOpacity = other?.borderOpacity,
         borderAlpha = other?.borderAlpha,
         borderWidth = other?.borderWidth,
-        borderAlign = other?.borderAlign,
+        borderOffset = other?.borderOffset,
         borderStyle = other?.borderStyle,
         borderRadius = other?.borderRadius;
 
@@ -163,7 +163,7 @@ class WxBadgeStyle with Diagnosticable {
     borderRadius: BorderRadius.all(Radius.circular(4)),
     borderWidth: 2.0,
     borderStyle: BorderStyle.none,
-    borderAlign: BorderSide.strokeAlignOutside,
+    borderOffset: BorderSide.strokeAlignOutside,
     foregroundSize: 11,
   );
 
@@ -197,7 +197,7 @@ class WxBadgeStyle with Diagnosticable {
   final Clip? clipBehavior;
 
   /// When [elevation] is non zero the color to use for the badge's shadow color.
-  final Color? shadowColor;
+  final Color? elevationColor;
 
   /// The badge's z-coordinate relative to the parent at which to place this physical object.
   ///
@@ -248,7 +248,7 @@ class WxBadgeStyle with Diagnosticable {
 
   /// The relative position of the stroke on a [BorderSide] in an
   /// [OutlinedBorder] or [Border].
-  final double? borderAlign;
+  final double? borderOffset;
 
   /// The style of this side of the badge's border.
   ///
@@ -328,7 +328,7 @@ class WxBadgeStyle with Diagnosticable {
     OutlinedBorder? border,
     EdgeInsetsGeometry? padding,
     Clip? clipBehavior,
-    Color? shadowColor,
+    Color? elevationColor,
     double? elevation,
     TextStyle? foregroundStyle,
     double? foregroundSize,
@@ -343,7 +343,7 @@ class WxBadgeStyle with Diagnosticable {
     double? borderOpacity,
     int? borderAlpha,
     double? borderWidth,
-    double? borderAlign,
+    double? borderOffset,
     BorderStyle? borderStyle,
     BorderRadius? borderRadius,
   }) {
@@ -357,7 +357,7 @@ class WxBadgeStyle with Diagnosticable {
       border: border ?? this.border,
       padding: padding ?? this.padding,
       clipBehavior: clipBehavior ?? this.clipBehavior,
-      shadowColor: shadowColor ?? this.shadowColor,
+      elevationColor: elevationColor ?? this.elevationColor,
       elevation: elevation ?? this.elevation,
       foregroundStyle: foregroundStyle ?? this.foregroundStyle,
       foregroundSize: foregroundSize ?? this.foregroundSize,
@@ -371,7 +371,7 @@ class WxBadgeStyle with Diagnosticable {
       borderOpacity: borderOpacity ?? this.borderOpacity,
       borderAlpha: borderAlpha ?? this.borderAlpha,
       borderWidth: borderWidth ?? this.borderWidth,
-      borderAlign: borderAlign ?? this.borderAlign,
+      borderOffset: borderOffset ?? this.borderOffset,
       borderStyle: borderStyle ?? this.borderStyle,
       borderRadius: borderRadius ?? this.borderRadius,
     );
@@ -393,7 +393,7 @@ class WxBadgeStyle with Diagnosticable {
       border: other.border,
       padding: other.padding,
       clipBehavior: other.clipBehavior,
-      shadowColor: other.shadowColor,
+      elevationColor: other.elevationColor,
       elevation: other.elevation,
       foregroundStyle: other.foregroundStyle,
       foregroundSize: other.foregroundSize,
@@ -407,7 +407,7 @@ class WxBadgeStyle with Diagnosticable {
       borderOpacity: other.borderOpacity,
       borderAlpha: other.borderAlpha,
       borderWidth: other.borderWidth,
-      borderAlign: other.borderAlign,
+      borderOffset: other.borderOffset,
       borderStyle: other.borderStyle,
       borderRadius: other.borderRadius,
     );
@@ -426,7 +426,7 @@ class WxBadgeStyle with Diagnosticable {
       border: OutlinedBorder.lerp(a?.border, b?.border, t),
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
-      shadowColor: Color.lerp(a?.shadowColor, b?.shadowColor, t),
+      elevationColor: Color.lerp(a?.elevationColor, b?.elevationColor, t),
       elevation: lerpDouble(a?.elevation, b?.elevation, t),
       foregroundStyle:
           TextStyle.lerp(a?.foregroundStyle, b?.foregroundStyle, t),
@@ -443,7 +443,7 @@ class WxBadgeStyle with Diagnosticable {
       borderOpacity: lerpDouble(a?.borderOpacity, b?.borderOpacity, t),
       borderAlpha: lerpInt(a?.borderAlpha, b?.borderAlpha, t),
       borderWidth: lerpDouble(a?.borderWidth, b?.borderWidth, t),
-      borderAlign: lerpDouble(a?.borderAlign, b?.borderAlign, t),
+      borderOffset: lerpDouble(a?.borderOffset, b?.borderOffset, t),
       borderStyle: t < 0.5 ? a?.borderStyle : b?.borderStyle,
       borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
     );
@@ -459,7 +459,7 @@ class WxBadgeStyle with Diagnosticable {
         'border': border,
         'padding': padding,
         'clipBehavior': clipBehavior,
-        'shadowColor': shadowColor,
+        'elevationColor': elevationColor,
         'elevation': elevation,
         'foregroundStyle': foregroundStyle,
         'foregroundSize': foregroundSize,
@@ -473,7 +473,7 @@ class WxBadgeStyle with Diagnosticable {
         'borderOpacity': borderOpacity,
         'borderAlpha': borderAlpha,
         'borderWidth': borderWidth,
-        'borderAlign': borderAlign,
+        'borderOffset': borderOffset,
         'borderStyle': borderStyle,
         'borderRadius': borderRadius,
       };
