@@ -156,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderStyle: BorderStyle.solid,
                         borderColor: Theme.of(context).colorScheme.surface,
                         backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.all(6),
                       ),
                       content: Text(
@@ -165,8 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       transition: AnimatedSwitcherTransitions.zoomOut,
                       child: const WxAvatar(
-                        image: NetworkImage('https://i.pravatar.cc/50?u=2'),
                         elevation: 3.0,
+                        image: NetworkImage('https://i.pravatar.cc/50?u=2'),
                         backgroundColor: Colors.red,
                         child: Text('Wx'),
                       ),
@@ -179,7 +180,24 @@ class _MyHomePageState extends State<MyHomePage> {
                           : Offset.fromDirection(-.5, 14),
                       style: const WxBadgeStyle.stadium(
                         elevation: 2,
+                        shadows: [
+                          BoxShadow(
+                            color: Colors.green,
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                        backgroundGradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Colors.blue,
+                            Colors.red,
+                          ],
+                        ),
                         backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 2,
@@ -236,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: const WxAvatar.circle(
                         image: NetworkImage('https://i.pravatar.cc/50?u=20'),
                         borderWidth: 2,
-                        borderAlign: 3,
+                        borderOffset: 3,
                         borderStyle: BorderStyle.solid,
                         borderColor: Colors.blue,
                         backgroundColor: Colors.red,

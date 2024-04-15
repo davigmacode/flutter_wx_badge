@@ -32,8 +32,8 @@ dependencies:
     sdk: flutter
   wx_badge:
     path: ../
-  wx_avatar: ^2.0.0
-  wx_anchor: ^1.0.1
+  wx_avatar: ^3.0.0
+  wx_anchor: ^1.1.2
   wx_text: ^2.0.1
   animated_switcher_transitions: ^1.0.0
 
